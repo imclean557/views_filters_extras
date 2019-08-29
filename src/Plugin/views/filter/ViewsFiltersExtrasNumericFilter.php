@@ -31,7 +31,7 @@ class ViewsFiltersExtrasNumericFilter extends NumericFilter {
       'title' => $this->t('Highest value (maximum)'),
       'method' => 'opMaximum',
       'short' => $this->t('Maximum'),
-      'values' => 1,
+      'values' => 2,
     ];
 
     return $operators;
@@ -45,7 +45,8 @@ class ViewsFiltersExtrasNumericFilter extends NumericFilter {
    */
   protected function opMinimum($field) {
     $field_name = "$this->tableAlias.$this->realField";
-    $this->query->addWhereExpression($this->options['group'], $field_name . ' IN (SELECT MIN(' . $field_name . ') FROM ' . $this->tableAlias . ' GROUP BY ' . $this->value['value'] . ')');
+    $expression = $this->buildExpression();
+    $this->query->addWhereExpression($this->options['group'], $field_name . ' IN (SELECT MIN(' . $field_name . ') FROM ' . $this->tableAlias . $expression . ')');
   }
 
   /**
@@ -56,7 +57,25 @@ class ViewsFiltersExtrasNumericFilter extends NumericFilter {
    */
   protected function opMaximum($field) {
     $field_name = "$this->tableAlias.$this->realField";
-    $this->query->addWhereExpression($this->options['group'], $field_name . ' IN (SELECT MAX(' . $field_name . ') FROM ' . $this->tableAlias . ' GROUP BY ' . $this->value['value'] . ')');
+    $expression = $this->buildExpression();
+    $this->query->addWhereExpression($this->options['group'], $field_name . ' IN (SELECT MAX(' . $field_name . ') FROM ' . $this->tableAlias . $expression . ')');
+  }
+
+  /**
+   * Build expression based on submitted values.
+   *
+   * @return string
+   *   The expression.
+   */
+  protected function buildExpression() {
+    $expression = '';
+    if ($this->value['min'] && $this->value['max']) {
+      $expression = ' WHERE ' . $this->value['min'] . ' = ' . $this->value['max'];
+    }
+    elseif ($this->value['min']) {
+      $expression = ' GROUP BY ' . $this->value['min'];
+    }
+    return $expression;
   }
 
 }
