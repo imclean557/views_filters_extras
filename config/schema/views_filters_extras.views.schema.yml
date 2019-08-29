@@ -1,0 +1,7 @@
+views.filter.views_filters_extras_numeric:
+  type: views_filter
+  label: 'Views Filters Extra Numeric'
+
+views.filter_value.views_filters_extras_numeric:
+  type: views.filter_value.numeric
+  label: 'Views Filters Extra Numeric'

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Views filters extras for the numeric field type.
+ */
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function views_filters_extras_views_data_alter(array &$data) {
+  foreach ($data as $table_name => $table) {
+    foreach ($table as $field_name => $field) {
+      if (isset($field['filter']) && ($field['filter']['id'] == 'numeric')) {
+        $data[$table_name][$field_name]['filter']['id'] = 'views_filters_extras_numeric';
+      }
+    }
+  }
+}
