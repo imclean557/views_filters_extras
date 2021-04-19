@@ -1,5 +1,5 @@
 name: 'Views Filters Extra'
 type: module
 description: 'Provides views filters including Minimum and Maximum for numeric fields.'
-core: 8.x
+core_version_requirement: ^8.8 || ^9
 package: 'Views'

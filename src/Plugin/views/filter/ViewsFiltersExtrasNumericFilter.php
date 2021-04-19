@@ -22,10 +22,10 @@ class ViewsFiltersExtrasNumericFilter extends NumericFilter {
   public function operators() {
     $operators = parent::operators();
     $operators['minimum'] = [
-      'title' => $this->t('Lowest value (minimum'),
+      'title' => $this->t('Lowest value (minimum)'),
       'method' => 'opMinimum',
       'short' => $this->t('minimum'),
-      'values' => 1,
+      'values' => 2,
     ];
     $operators['maximum'] = [
       'title' => $this->t('Highest value (maximum)'),
